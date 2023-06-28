@@ -4,8 +4,8 @@
 	annotations="JDK" parallel="tests">
 
 	<test name="Test1">
-		<parameter name="browser" value="Firefox" />
-		<parameter name="version" value="73.0" />
+		<parameter name="browser" value="Chrome" />
+		<parameter name="version" value="113.0" />
 		<parameter name="platform" value="Windows 10" />
 		<classes>
 			<class name="com.lambdatest.Tests.ParallelTest" />
@@ -15,7 +15,7 @@
 	<test name="Test2">
 		<parameter name="browser" value="Safari" />
 		<parameter name="version" value="13.0" />
-		<parameter name="platform" value="macOS Catalina" />
+		<parameter name="platform" value="MacOS Catalina" />
 		<classes>
 			<class name="com.lambdatest.Tests.ParallelTest" />
 		</classes>
