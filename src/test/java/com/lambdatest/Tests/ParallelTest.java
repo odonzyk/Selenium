@@ -44,6 +44,7 @@ public class ParallelTest {
 		capabilities.setCapability("build", "TestNG Parallel");
 		capabilities.setCapability("build", buildName);
 		capabilities.setCapability("name", "TestNG Parallel");
+		capabilities.setCapability("idleTimeout", "240");
 		capabilities.setCapability("network", true);
 		capabilities.setCapability("video", true);
 		capabilities.setCapability("console", true);
@@ -91,6 +92,7 @@ public class ParallelTest {
 
 	@AfterTest(alwaysRun = true)
 	public void tearDown() throws Exception {
+		driver.close();
 		driver.quit();
 	}
 
