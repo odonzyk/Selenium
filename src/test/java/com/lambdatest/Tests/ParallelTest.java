@@ -1,6 +1,5 @@
 package com.lambdatest.Tests;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.openqa.selenium.By;
@@ -20,30 +19,31 @@ public class ParallelTest {
 	// Lambdatest Credentails can be found here at https://www.lambdatest.com/capabilities-generator
 	String username = System.getenv("LT_USERNAME") == null ? "YOUR LT_USERNAME" : System.getenv("LT_USERNAME"); 
 	String accessKey = System.getenv("LT_ACCESS_KEY") == null ? "YOUR LT_ACCESS_KEY" : System.getenv("LT_ACCESS_KEY");
-    String buildName = System.getenv("LT_BUILD_NAME") == null ? "TestNG Parallel" : System.getenv("LT_BUILD_NAME");
-	
+    String buildName = System.getenv("LT_BUILD_NAME") == null ? "TestNG Parallel" : System.getenv("LT_BUILD_NAME");	
 	
 	public static WebDriver driver;
 
 	@BeforeTest(alwaysRun = true)
 	@Parameters(value = { "browser", "version", "platform" })
-	protected void setUp(String browser, String version, String platform) throws Exception {
+	private void setUp(String browser, String version, String platform) throws Exception {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 
 		// set desired capabilities to launch appropriate browser on Lambdatest
 		capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
 		capabilities.setCapability(CapabilityType.VERSION, version);
-		capabilities.setCapability(CapabilityType.PLATFORM, platform);
-		
+		capabilities.setCapability(CapabilityType.PLATFORM_NAME, platform);	
+
+		// capabilities.setCapability("browserName", browser);
 		capabilities.setCapability("build", "TestNG Parallel");
 		capabilities.setCapability("build", buildName);
 		capabilities.setCapability("name", "TestNG Parallel");
-		capabilities.setCapability("idleTimeout", "240");
+		// capabilities.setCapability("idleTimeout", "240");
 		capabilities.setCapability("network", true);
 		capabilities.setCapability("video", true);
 		capabilities.setCapability("console", true);
 		capabilities.setCapability("visual", true);
-		// capabilities.setCapability("w3c", true);
+		capabilities.setCapability("w3c", true);
+
 		
 
 		System.out.println("capabilities" + capabilities);
@@ -60,7 +60,7 @@ public class ParallelTest {
 	}
 
 	@Test
-	public void tests() throws Exception {
+	public void teststeps() throws Exception {
 
 		try {
 			driver.wait();
@@ -87,10 +87,10 @@ public class ParallelTest {
 	}
 
     @AfterMethod
-    public void afterMethod() {
+    public void tearDown() {
         try {
-            driver.close();
-            // driver.quit();
+            //driver.close();
+            driver.quit();
         } catch (
 
         Exception e) {
@@ -106,5 +106,10 @@ public class ParallelTest {
 		System.out.println(reason);
 	}
 	
+
+	public static void main(String[] args) throws Exception {
+        ParallelTest test = new ParallelTest();
+        test.teststeps();
+    }
 
 }

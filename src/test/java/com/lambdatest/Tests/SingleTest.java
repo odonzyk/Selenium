@@ -30,7 +30,7 @@ public class SingleTest {
 		DesiredCapabilities capability = new DesiredCapabilities();
 		capability.setCapability(CapabilityType.BROWSER_NAME, browser);
 		capability.setCapability(CapabilityType.VERSION, version);
-		capability.setCapability(CapabilityType.PLATFORM, platform);
+		capability.setCapability(CapabilityType.PLATFORM_NAME, platform);
 		capability.setCapability("build", "TestNG Single Test");
 		capability.setCapability("name", "TestNG Single");
 		capability.setCapability("network", true);
