@@ -1,60 +1,87 @@
 package com.lambdatest.Tests;
 
-import org.testng.annotations.Test;
-import org.testng.AssertJUnit;
 import java.net.URL;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 public class SingleTest {
-	
-	//Lambdatest Credentails can be found here at https://www.lambdatest.com/capabilities-generator
+	private WebDriver driver;
+
+	// Lambdatest Credentails can be found here at https://www.lambdatest.com/capabilities-generator
 	String username = System.getenv("LT_USERNAME") == null ? "YOUR LT_USERNAME" : System.getenv("LT_USERNAME"); 
-	String accessKey = System.getenv("LT_ACCESS_KEY") == null ? "YOUR LT_ACCESS_KEY" : System.getenv("LT_ACCESS_KEY"); 
+	String accessKey = System.getenv("LT_ACCESS_KEY") == null ? "YOUR LT_ACCESS_KEY" : System.getenv("LT_ACCESS_KEY");
+    String buildName = System.getenv("LT_BUILD_NAME") == null ? "TestNG Parallel" : System.getenv("LT_BUILD_NAME");
 	
 	
-	public static WebDriver driver;
-	public static String status = "failed";
+	// public static WebDriver driver;
 
-	@BeforeTest(alwaysRun=true)
+	@BeforeTest(alwaysRun = true)
 	@Parameters(value = { "browser", "version", "platform" })
-	public void setUp(String browser, String version, String platform) throws Exception {
+	protected void setUp(String browser, String version, String platform) throws Exception {
+		DesiredCapabilities capabilities = new DesiredCapabilities();
 
-		DesiredCapabilities capability = new DesiredCapabilities();
-		capability.setCapability(CapabilityType.BROWSER_NAME, browser);
-		capability.setCapability(CapabilityType.VERSION, version);
-		capability.setCapability(CapabilityType.PLATFORM_NAME, platform);
-		capability.setCapability("build", "TestNG Single Test");
-		capability.setCapability("name", "TestNG Single");
-		capability.setCapability("network", true);
-		capability.setCapability("video", true);
-		capability.setCapability("console", true);
-		capability.setCapability("visual", true);
+		// set desired capabilities to launch appropriate browser on Lambdatest
+		capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
+		capabilities.setCapability(CapabilityType.VERSION, version);
+		capabilities.setCapability(CapabilityType.PLATFORM, platform);
+		capabilities.setCapability("build", "TestNG Parallel");
+		capabilities.setCapability("build", buildName);
+		capabilities.setCapability("name", "TestNG Parallel");
+		capabilities.setCapability("network", true);
+		capabilities.setCapability("video", true);
+		capabilities.setCapability("console", true);
+		capabilities.setCapability("visual", true);
 
-		String gridURL = "http://" + username + ":" + accessKey + "@hub.lambdatest.com/wd/hub";
+
+		System.out.println("capabilities" + capabilities);
+
+		// Launch remote browser and set it as the current thread
+		String gridURL = "https://" + username + ":" + accessKey + "@hub.lambdatest.com/wd/hub";
 		try {
-			driver = new RemoteWebDriver(new URL(gridURL), capability);
+			driver = new RemoteWebDriver(new URL(gridURL), capabilities);
 		} catch (Exception e) {
 			System.out.println("driver error");
 			System.out.println(e.getMessage());
 		}
+
 	}
 
 	@Test
-	public static void test() {
+	public void test() throws Exception {
+		WebDriverWait wait;
+		
+		wait = new WebDriverWait(driver, 10);
+	
 		try {
-
 			// Launch the app
-			driver.get("https://lambdatest.github.io/sample-todo-app/");
+			driver.get("https://www.lambdatest.com/selenium-playground");
 
 			// Click on First Item
+			WebElement element = driver.findElement(By.linkText("Simple Form Demo"));
+			element.click();
+
+			// wait until loaded
+			if (JavascriptExecutor("return document.readyState").toString().equals("complete")) {
+				System.out.println("Page has loaded");
+			}
+
+			wait.until(driver -> driver.getTitle().contentEquals("Selenium Grid Online | Run Selenium Test On Cloud"));
+			System.out.println(("Title of page is: " + driver.getTitle()));
+	
+	
+	
+
+			/*
 			driver.findElement(By.name("li1")).click();
 
 			// Click on Second Item
@@ -68,20 +95,51 @@ public class SingleTest {
 			// Verify Added item
 			String item = driver.findElement(By.xpath("/html/body/div/div/div/ul/li[6]/span")).getText();
 			AssertJUnit.assertTrue(item.contains("Yey, Let's add it to list"));
-			status = "passed";
-			((JavascriptExecutor) driver).executeScript("lambda-status=" + status + "");
+
+*/
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} catch (Error e) {
-			System.out.println("Assert failed");
-		}
+		} 
+
 
 	}
 
-	@AfterTest
-	public static void afterTest() {
-		((JavascriptExecutor) driver).executeScript("lambda-status=" + status + "");
-		driver.quit();
+
+
+/*
+    @AfterMethod
+    public void afterMethod() {
+        try {
+            driver.close();
+            driver.quit();
+        } catch (
+
+        Exception e) {
+            markStatus("failed", "Got exception!", driver);
+            e.printStackTrace();
+            driver.quit();
+        }
+    }
+
+    public static void markStatus(String status, String reason, WebDriver driver) {
+        JavascriptExecutor jsExecute = (JavascriptExecutor) driver;
+        jsExecute.executeScript("lambda-status=" + status);
+        System.out.println(reason);
+    }
+ */	
+
+
+
+ private Object JavascriptExecutor(String string) {
+		return null;
 	}
+
+@AfterTest(alwaysRun = true)
+ public void tearDown() throws Exception {
+	System.out.println("Closing the browser ");
+	driver.close();
+//	driver.quit();
+ }
 
 }
