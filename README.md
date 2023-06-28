@@ -1,48 +1,38 @@
-# Java-Selenium-Sample
-![Java](https://www.lambdatest.com/support/assets/images/og-images/Java-with-Selenium-1-1.jpg)
+# Welcome to Lambdatest - Java TestNG Selenium 
 
-### Prerequisites
-1. Install and set environment variable for java.
-    * Windows - https://www.oracle.com/java/technologies/downloads/
-    * Linux - ```  sudo apt-get install openjdk-8-jre  ```
-    * MacOS - Java should already be present on Mac OS X by default.
-2 Install and set environment varibale for Maven.
-    * Windows - https://maven.apache.org/install.html
-    * Linux/ MacOS -  [Homebrew](http://brew.sh/) (Easier)
-    ```
-     install maven
-    ```
-    
-### Run your First Test
-1. Clone the Java-Selenium-Sample repository. 
-```
-git clone https://github.com/LambdaTest/java-selenium-sample.git
-```
-2. Next get into Java-Selenium-Sample folder, and import Lamabdatest Credentials. You can get these from lambdatest automation dashboard.
-   <p align="center">
-   <b>For Linux/macOS:</b>:
- 
-```
-export LT_USERNAME="YOUR_USERNAME"
-export LT_ACCESS_KEY="YOUR ACCESS KEY"
-```
-<p align="center">
-   <b>For Windows:</b>
+## Step 1: Configure your settings and required capabilites for your test
 
+For running a test we will need your `username` and `access key` to map with our cloud infrastrure. 
+
+You can find the required credentials here : <https://www.lambdatest.com/capabilities-generator>
+
+### Change the properties 
+
+Add your Lambdatest `username` and `access key` in testcase.java
 ```
-set LT_USERNAME="YOUR_USERNAME"
-set LT_ACCESS_KEY="YOUR ACCESS KEY"
-```
-Step 3. You may also want to run the command below to check for outdated dependencies. Please be sure to verify and review updates before editing your pom.xml file as they may not be compatible with your code.
-```
- mvn versions:display-dependency-updates
-```
-Step 4. Run single test.
-```
-mvn clean install exec:java -Dexec.mainClass="com.lambdatest.BasicAuthentication" -Dexec.classpathScope=test -e
+String username = <YOUR LT_USERNAME> #Replace with your username
+String accessKey = <YOUR LT_ACCESS_KEY> #Replace with your access key
 ```
 
-## About LambdaTest
+## Step 2: Running Tests
 
-[LambdaTest](https://www.lambdatest.com/) is a cloud based selenium grid infrastructure that can help you run automated cross browser compatibility tests on 2000+ different browser and operating system environments. LambdaTest supports all programming languages and frameworks that are supported with Selenium, and have easy integrations with all popular CI/CD platforms. It's a perfect solution to bring your [selenium automation testing](https://www.lambdatest.com/selenium-automation) to cloud based infrastructure that not only helps you increase your test coverage over multiple desktop and mobile browsers, but also allows you to cut down your test execution time by running tests on parallel.
+We have preinstalled all the required environment for running the tests. You can now execute the tests in the console by the following commands: 
 
+#### To run single test
+```
+$ mvn test -P single
+```
+
+#### To run parallel/multiple test
+```
+$ mvn test -P parallel
+```
+
+
+## Step 3: Test Results
+
+Once you have completed running the tests you can find the results at : <https://automation.lambdatest.com> with the build name `TestNG` as a prefix. 
+
+For any other quires please connect with us at <support.lambdatest.com>
+
+### Happy testing! :computer:
