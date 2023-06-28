@@ -19,32 +19,28 @@ public class ParallelTest {
 	// Lambdatest Credentails can be found here at https://www.lambdatest.com/capabilities-generator
 	String username = System.getenv("LT_USERNAME") == null ? "YOUR LT_USERNAME" : System.getenv("LT_USERNAME"); 
 	String accessKey = System.getenv("LT_ACCESS_KEY") == null ? "YOUR LT_ACCESS_KEY" : System.getenv("LT_ACCESS_KEY");
-    String buildName = System.getenv("LT_BUILD_NAME") == null ? "TestNG Parallel" : System.getenv("LT_BUILD_NAME");	
+        String buildName = System.getenv("LT_BUILD_NAME") == null ? "TestNG Parallel" : System.getenv("LT_BUILD_NAME");
+	
 	
 	public static WebDriver driver;
 
 	@BeforeTest(alwaysRun = true)
 	@Parameters(value = { "browser", "version", "platform" })
-	private void setUp(String browser, String version, String platform) throws Exception {
+	protected void setUp(String browser, String version, String platform) throws Exception {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 
 		// set desired capabilities to launch appropriate browser on Lambdatest
 		capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
 		capabilities.setCapability(CapabilityType.VERSION, version);
-		capabilities.setCapability(CapabilityType.PLATFORM_NAME, platform);	
-
-		// capabilities.setCapability("browserName", browser);
+		capabilities.setCapability(CapabilityType.PLATFORM, platform);
 		capabilities.setCapability("build", "TestNG Parallel");
 		capabilities.setCapability("build", buildName);
 		capabilities.setCapability("name", "TestNG Parallel");
-		// capabilities.setCapability("idleTimeout", "240");
 		capabilities.setCapability("network", true);
 		capabilities.setCapability("video", true);
 		capabilities.setCapability("console", true);
 		capabilities.setCapability("visual", true);
-		capabilities.setCapability("w3c", true);
 
-		
 
 		System.out.println("capabilities" + capabilities);
 
@@ -60,10 +56,9 @@ public class ParallelTest {
 	}
 
 	@Test
-	public void teststeps() throws Exception {
+	public void test() throws Exception {
 
 		try {
-			driver.wait();
 			// Launch the app
 			driver.get("https://lambdatest.github.io/sample-todo-app/");
 
@@ -86,10 +81,13 @@ public class ParallelTest {
 		} 
 	}
 
+
+
+/*
     @AfterMethod
-    public void tearDown() {
+    public void afterMethod() {
         try {
-            //driver.close();
+            driver.close();
             driver.quit();
         } catch (
 
@@ -100,16 +98,19 @@ public class ParallelTest {
         }
     }
 
-	public static void markStatus(String status, String reason, WebDriver driver) {
-		JavascriptExecutor jsExecute = (JavascriptExecutor) driver;
-		jsExecute.executeScript("lambda-status=" + status);
-		System.out.println(reason);
-	}
-	
-
-	public static void main(String[] args) throws Exception {
-        ParallelTest test = new ParallelTest();
-        test.teststeps();
+    public static void markStatus(String status, String reason, WebDriver driver) {
+        JavascriptExecutor jsExecute = (JavascriptExecutor) driver;
+        jsExecute.executeScript("lambda-status=" + status);
+        System.out.println(reason);
     }
+ */	
+
+
+ @AfterTest(alwaysRun = true)
+ public void tearDown() throws Exception {
+	System.out.println("Closing the browser ");
+	driver.close();
+//	driver.quit();
+ }
 
 }
