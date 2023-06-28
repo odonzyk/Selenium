@@ -3,21 +3,23 @@ package com.lambdatest.Tests;
 import static org.junit.Assert.assertEquals;
 
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.AssertJUnit;
+
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class ParallelTest {
+public class ParallelTest2 {
 	private WebDriver driver;
 
 	// Lambdatest Credentails can be found here at https://www.lambdatest.com/capabilities-generator
@@ -36,7 +38,7 @@ public class ParallelTest {
 		// set desired capabilities to launch appropriate browser on Lambdatest
 		capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
 		capabilities.setCapability(CapabilityType.VERSION, version);
-		capabilities.setCapability(CapabilityType.PLATFORM, platform);
+		capabilities.setCapability(CapabilityType.PLATFORM_NAME, platform);
 		capabilities.setCapability("build", "TestNG Parallel");
 		capabilities.setCapability("build", buildName);
 		capabilities.setCapability("name", "TestNG Parallel");
@@ -62,24 +64,35 @@ public class ParallelTest {
 
 	@Test
 	public void test() throws Exception {
-		WebDriverWait wait;
 		
-		wait = new WebDriverWait(driver, 10);
+		
+		
 	
 		try {
 			// Launch the app
 			driver.get("https://www.lambdatest.com/selenium-playground");
 
+
+			// driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+			
 			// Click on First Item
-			WebElement element = driver.findElement(By.linkText("Simple Form Demo"));
+			WebElement element = driver.findElement(By.linkText("Drag & Drop Sliders"));
 			element.click();
 
-			// wait until loaded
-/*
-			if (JavascriptExecutor("return document.readyState").toString().equals("complete")) {
-				System.out.println("Page has loaded");
-			}
+			WebElement slider = driver.findElement(By.className("sp__range"));
+			// j.executeScript("arguments[0].setAttribute('style', 'left: 95%;')",a);
+
+            //Actions(driver).dragAndDropBy(slider, 40, 0).perform();
+
+
+			//Action action = (Action) move.dragAndDropBy(slider, 95, 0).build();
+			//action.perform();
  */
+
+			// wait until loaded
+
+
+/*
 			// wait.until(driver -> driver.getTitle().contentEquals("Selenium Grid Online Run Selenium Test On Cloud"));
 			System.out.println(("Title of page is: " + driver.getTitle()));
 	
@@ -91,7 +104,7 @@ public class ParallelTest {
 		
 			Object value = driver.findElement(By.id("message")).getText();
 			assertEquals(text,value);
-
+ */
 			
 
 
@@ -145,9 +158,6 @@ public class ParallelTest {
 
 
 
- private Object JavascriptExecutor(String string) {
-		return null;
-	}
 
 @AfterTest(alwaysRun = true)
  public void tearDown() throws Exception {

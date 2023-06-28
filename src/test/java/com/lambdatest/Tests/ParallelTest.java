@@ -10,8 +10,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.AssertJUnit;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -36,7 +34,7 @@ public class ParallelTest {
 		// set desired capabilities to launch appropriate browser on Lambdatest
 		capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
 		capabilities.setCapability(CapabilityType.VERSION, version);
-		capabilities.setCapability(CapabilityType.PLATFORM, platform);
+		capabilities.setCapability(CapabilityType.PLATFORM_NAME, platform);
 		capabilities.setCapability("build", "TestNG Parallel");
 		capabilities.setCapability("build", buildName);
 		capabilities.setCapability("name", "TestNG Parallel");
@@ -62,9 +60,6 @@ public class ParallelTest {
 
 	@Test
 	public void test() throws Exception {
-		WebDriverWait wait;
-		
-		wait = new WebDriverWait(driver, 10);
 	
 		try {
 			// Launch the app
@@ -145,10 +140,7 @@ public class ParallelTest {
 
 
 
- private Object JavascriptExecutor(String string) {
-		return null;
-	}
-
+ 
 @AfterTest(alwaysRun = true)
  public void tearDown() throws Exception {
 	System.out.println("Closing the browser ");

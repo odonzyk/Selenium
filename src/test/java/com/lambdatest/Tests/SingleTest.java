@@ -33,7 +33,7 @@ public class SingleTest {
 		// set desired capabilities to launch appropriate browser on Lambdatest
 		capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
 		capabilities.setCapability(CapabilityType.VERSION, version);
-		capabilities.setCapability(CapabilityType.PLATFORM, platform);
+		capabilities.setCapability(CapabilityType.PLATFORM_NAME, platform);
 		capabilities.setCapability("build", "TestNG Parallel");
 		capabilities.setCapability("build", buildName);
 		capabilities.setCapability("name", "TestNG Parallel");
