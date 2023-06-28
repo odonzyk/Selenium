@@ -5,7 +5,7 @@
 
 	<test name="Test1">
 		<parameter name="browser" value="Chrome" />
-		<parameter name="version" value="113.0" />
+		<parameter name="version" value="114.0" />
 		<parameter name="platform" value="Windows 10" />
 		<classes>
 			<class name="com.lambdatest.Tests.ParallelTest" />
