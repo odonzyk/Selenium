@@ -4,8 +4,8 @@
 	annotations="JDK" parallel="tests">
 
 	<test name="Test1">
-		<parameter name="browser" value="Chrome" />
-		<parameter name="version" value="114.0" />
+		<parameter name="browser" value="Firefox" />
+		<parameter name="version" value="73.0" />
 		<parameter name="platform" value="Windows 10" />
 		<classes>
 			<class name="com.lambdatest.Tests.ParallelTest" />
